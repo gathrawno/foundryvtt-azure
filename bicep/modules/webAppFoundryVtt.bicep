@@ -12,7 +12,7 @@ param foundryPassword string
 @secure()
 param foundryAdminKey string
 
-var linuxFxVersion = 'DOCKER|felddy/foundryvtt:release'
+var linuxFxVersion = 'DOCKER|felddy/foundryvtt:10'
 
 resource webApp 'Microsoft.Web/sites@2021-01-15' = {
   name: webAppName
