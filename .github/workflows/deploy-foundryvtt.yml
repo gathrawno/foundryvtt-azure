@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   deploy-aas:
-    if: vars.Type == 'AAS'
+    if: vars.TYPE == 'AAS'
     uses: ./.github/workflows/deploy-aas.yml
     with:
       LOCATION: ${{ vars.LOCATION }}
@@ -30,7 +30,7 @@ jobs:
       FOUNDRY_ADMIN_KEY: ${{ secrets.FOUNDRY_ADMIN_KEY }}
 
   deploy-aci:
-    if: vars.Type == 'ACI'
+    if: vars.TYPE == 'ACI'
     uses: ./.github/workflows/deploy-aci.yml
     with:
       location: ${{ vars.LOCATION }}
