@@ -48,3 +48,29 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
     }
   }
 }
+
+resource caddystorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: 'gatfvttcaddy'
+  location: location
+  kind: storageConfigurationMap[storageConfiguration].kind
+  sku: {
+    name: storageConfigurationMap[storageConfiguration].sku
+  }
+  properties: {
+    accessTier: 'Hot'
+    allowSharedKeyAccess: true
+    largeFileSharesState: storageConfigurationMap[storageConfiguration].largeFileSharesState
+  }
+
+  resource symbolicname 'fileServices@2021-02-01' = {
+    name: 'default'
+
+    resource symbolicname 'shares@2021-02-01' = {
+      name: 'caddydata'
+      properties: {
+        enabledProtocols: 'SMB'
+        shareQuota: storageConfigurationMap[storageConfiguration].shareQuota
+      }
+    }
+  }
+}
