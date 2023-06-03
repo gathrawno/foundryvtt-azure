@@ -39,6 +39,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' existing 
   name: storageAccountName
 }
 
+resource caddystorageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' existing = {
+  name: 'gatfvttcaddy'
+}
+
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01' = {
   name: containerGroupName
   location: location
@@ -47,7 +51,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
       {
         name: 'foundryvtt'
         properties: {
-          image: 'felddy/foundryvtt:release'
+          image: 'felddy/foundryvtt:10'
           ports: [
             {
               protocol: 'TCP'
@@ -82,13 +86,53 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
           ]
         }
       }
+      {
+        name: 'foundryvttcaddy'
+        properties: {
+          image: 'caddy:latest'
+          ports: [
+            {
+              protocol: 'TCP'
+              port: 80
+            }
+            {
+              protocol: 'TCP'
+              port: 443
+            }
+          ]
+          command:[
+            'caddy'
+            'reverse-proxy'
+            '--from'
+            'foundry.gathrawno.co.uk'
+            '--to'
+            'localhost:30000'
+          ]
+          resources: {
+            requests: {
+              memoryInGB: any(containerConfigurationMap[containerConfiguration].memoryInGB)
+              cpu: containerConfigurationMap[containerConfiguration].cpu
+            }
+          }
+          volumeMounts: [
+            {
+              name: 'caddydata'
+              mountPath: '/data'
+            }
+          ]
+        }
+      }
     ]
     restartPolicy: 'OnFailure'
     ipAddress: {
       ports: [
         {
           protocol: 'TCP'
-          port: 30000
+          port: 80
+        }
+        {
+          protocol: 'TCP'
+          port: 443
         }
       ]
       type: 'Public'
@@ -102,6 +146,14 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
           shareName: shareName
           storageAccountName: storageAccountName
           storageAccountKey: storageAccount.listKeys().keys[0].value
+        }
+      }
+      {
+        name: 'caddydata'
+        azureFile: {
+          shareName: 'caddydata'
+          storageAccountName: 'gatfvttcaddy'
+          storageAccountKey: caddystorageAccount.listKeys().keys[0].value
         }
       }
     ]
