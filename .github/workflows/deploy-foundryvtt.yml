@@ -11,23 +11,23 @@ permissions:
   contents: read
 
 jobs:
-  deploy-aas:
-    if: vars.TYPE == 'AAS'
-    uses: ./.github/workflows/deploy-aas.yml
-    with:
-      LOCATION: ${{ vars.LOCATION }}
-      BASE_RESOURCE_NAME: ${{ vars.BASE_RESOURCE_NAME }}
-      RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP_NAME }}
-      STORAGE_CONFIGURATION: ${{ vars.STORAGE_CONFIGURATION }}
-      APPSERVICEPLAN_CONFIGURATION: ${{ vars.APPSERVICEPLAN_CONFIGURATION }}
-      DEPLOY_DDBPROXY: ${{ vars.DEPLOY_DDBPROXY }}
-    secrets:
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      FOUNDRY_USERNAME: ${{ secrets.FOUNDRY_USERNAME }}
-      FOUNDRY_PASSWORD: ${{ secrets.FOUNDRY_PASSWORD }}
-      FOUNDRY_ADMIN_KEY: ${{ secrets.FOUNDRY_ADMIN_KEY }}
+#  deploy-aas:
+#    if: vars.TYPE == 'AAS'
+#    uses: ./.github/workflows/deploy-aas.yml
+#    with:
+#      LOCATION: ${{ vars.LOCATION }}
+#      BASE_RESOURCE_NAME: ${{ vars.BASE_RESOURCE_NAME }}
+#      RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP_NAME }}
+#      STORAGE_CONFIGURATION: ${{ vars.STORAGE_CONFIGURATION }}
+#      APPSERVICEPLAN_CONFIGURATION: ${{ vars.APPSERVICEPLAN_CONFIGURATION }}
+#      DEPLOY_DDBPROXY: ${{ vars.DEPLOY_DDBPROXY }}
+#    secrets:
+#      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#      FOUNDRY_USERNAME: ${{ secrets.FOUNDRY_USERNAME }}
+#      FOUNDRY_PASSWORD: ${{ secrets.FOUNDRY_PASSWORD }}
+#      FOUNDRY_ADMIN_KEY: ${{ secrets.FOUNDRY_ADMIN_KEY }}
 
   deploy-aci:
     if: vars.TYPE == 'ACI'
