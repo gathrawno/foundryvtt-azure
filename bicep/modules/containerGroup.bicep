@@ -22,7 +22,7 @@ param foundryAdminKey string
 
 var containerConfigurationMap = {
   Small: {
-    memoryInGB: '1.5'
+    memoryInGB: '3'
     cpu: 1
   }
   Medium: {
