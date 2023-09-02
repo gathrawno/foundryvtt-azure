@@ -51,7 +51,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
       {
         name: 'foundryvtt'
         properties: {
-          image: 'felddy/foundryvtt:10'
+          image: 'felddy/foundryvtt:release'
           ports: [
             {
               protocol: 'TCP'
